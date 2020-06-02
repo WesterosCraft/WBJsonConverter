@@ -24,25 +24,36 @@ function flatten(data) {
     recurse(data, "");
     return result;
 }
-const reducer = data.blocks.map((block) => {
-   return block.subBlocks.map((subblock) => {
-        return {
-            name: subblock.label,
-            parentBlockName: block.blockName,
-            blockID: block.blockID,
-            material: block.material,
-            sound: block.stepSound,
-            type: block.blockType,
-            light: block.lightValue,
-            meta: subblock.meta,
-            id: `${block.blockID}:${subblock.meta}`,
-            textures: subblock.textures,
-            textureLink: subblock.textures && subblock.textures.map((texture) => {
-                return `https://raw.githubusercontent.com/WesterosCraft/WesterosBlocks/1.12.2/src/main/resources/assets/westerosblocks/textures/blocks/${texture}.png`
-            })
-        }
-    })
+
+
+const reducer = data.blocks.reduce((acc, curr) => {
+return curr.subBlocks.map((subblock) => {
+    return {
+        name: curr.blockName
+    }
 })
+}, {})
+
+
+// const reducer = data.blocks.map((block) => {
+//    return block.subBlocks.map((subblock) => {
+//         return {
+//             name: subblock.label,
+//             parentBlockName: block.blockName,
+//             blockID: block.blockID,
+//             material: block.material,
+//             sound: block.stepSound,
+//             type: block.blockType,
+//             light: block.lightValue,
+//             meta: subblock.meta,
+//             id: `${block.blockID}:${subblock.meta}`,
+//             textures: subblock.textures,
+//             textureLink: subblock.textures && subblock.textures.map((texture) => {
+//                 return `https://raw.githubusercontent.com/WesterosCraft/WesterosBlocks/1.12.2/src/main/resources/assets/westerosblocks/textures/blocks/${texture}.png`
+//             })
+//         }
+//     })
+// })
 const writeJson = () => {
     fs.writeFile("./result.json", JSON.stringify(reducer, null, 4), (err) => {
         if (err) {
