@@ -36,17 +36,23 @@ const reducer = data.blocks.map((block) => {
             light: block.lightValue,
             meta: subblock.meta,
             id: `${block.blockID}:${subblock.meta}`,
-            textures: [subblock.textures]
+            textures: subblock.textures,
+            textureLink: subblock.textures && subblock.textures.map((texture) => {
+                return `https://raw.githubusercontent.com/WesterosCraft/WesterosBlocks/1.12.2/src/main/resources/assets/westerosblocks/textures/blocks/${texture}.png`
+            })
         }
     })
 })
+const writeJson = () => {
+    fs.writeFile("./result.json", JSON.stringify(reducer, null, 4), (err) => {
+        if (err) {
+            console.error(err)
+            return;
+        };
+        console.log("File has been created");
+    });
+}
 
-fs.writeFile("./sample.json", JSON.stringify(reducer, null, 4), (err) => {
-    if (err) {
-        console.error(err
-        return;
-    };
-    console.log("File has been created");
-});
+// writeJson()
 
 console.log(reducer)
