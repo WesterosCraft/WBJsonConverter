@@ -17,6 +17,9 @@ const reducer = (input) => {
           meta: subblock.meta,
           id: `${block.blockID}:${subblock.meta}`,
           textures: subblock.textures,
+          textureLink: subblock.textures && subblock.textures.map((texture) => {
+              return `https://raw.githubusercontent.com/WesterosCraft/WesterosBlocks/1.12.2/src/main/resources/assets/westerosblocks/textures/blocks/${texture}.png`
+          })
         });
       });
   });
@@ -24,27 +27,9 @@ const reducer = (input) => {
   return result;
 };
 
-console.log(reducer(data));
+const result = reducer(data);
 
-// const reducer = data.blocks.map((block) => {
-//    return block.subBlocks.map((subblock) => {
-//         return {
-//             name: subblock.label,
-//             parentBlockName: block.blockName,
-//             blockID: block.blockID,
-//             material: block.material,
-//             sound: block.stepSound,
-//             type: block.blockType,
-//             light: block.lightValue,
-//             meta: subblock.meta,
-//             id: `${block.blockID}:${subblock.meta}`,
-//             textures: subblock.textures,
-//             textureLink: subblock.textures && subblock.textures.map((texture) => {
-//                 return `https://raw.githubusercontent.com/WesterosCraft/WesterosBlocks/1.12.2/src/main/resources/assets/westerosblocks/textures/blocks/${texture}.png`
-//             })
-//         }
-//     })
-// })
+console.log(reducer(data));
 
 const writeJson = () => {
   fs.writeFile("./result.json", JSON.stringify(result, null, 4), (err) => {
