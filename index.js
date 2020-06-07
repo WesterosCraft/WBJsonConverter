@@ -1,6 +1,10 @@
 import data from "./WesterosBlocks.json";
 var fs = require("fs");
 
+const lowerAndUnderline = (str) => {
+  return str.replace(/\s+/g, '_').toLowerCase();
+}
+
 const reducer = (input) => {
   const result = [];
   input.blocks.forEach((block) => {
@@ -15,6 +19,7 @@ const reducer = (input) => {
           type: block.blockType,
           light: block.lightValue,
           meta: subblock.meta,
+          namespaced: `wb:${lowerAndUnderline(subblock.label)}`,
           textures: subblock.textures,
           textureLink: subblock.textures && subblock.textures.map((texture) => {
               return `https://raw.githubusercontent.com/WesterosCraft/WesterosBlocks/1.12.2/src/main/resources/assets/westerosblocks/textures/blocks/${texture}.png`
