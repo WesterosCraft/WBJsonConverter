@@ -9,13 +9,12 @@ const reducer = (input) => {
         result.push({
           name: subblock.label,
           parentBlock: block.blockName,
-          blockID: block.blockID,
+          blockID: block.blockIDs ? subblock.meta <=7 ? block.blockIDs[0] : block.blockIDs[1] : block.blockID,
           material: block.material,
           sound: block.stepSound,
           type: block.blockType,
           light: block.lightValue,
           meta: subblock.meta,
-          id: `${block.blockID}:${subblock.meta}`,
           textures: subblock.textures,
           textureLink: subblock.textures && subblock.textures.map((texture) => {
               return `https://raw.githubusercontent.com/WesterosCraft/WesterosBlocks/1.12.2/src/main/resources/assets/westerosblocks/textures/blocks/${texture}.png`
