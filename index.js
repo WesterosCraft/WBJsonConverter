@@ -1,4 +1,7 @@
 import data from "./WesterosBlocks.json";
+import ctm from './ctmresult.json';
+import { vanillaBlocks } from './vanillablocks';
+
 var fs = require("fs");
 
 const lowerAndUnderline = (str) => {
@@ -23,6 +26,9 @@ const reducer = (input) => {
           textures: subblock.textures,
           textureLink: subblock.textures && subblock.textures.map((texture) => {
               return `https://raw.githubusercontent.com/WesterosCraft/WesterosBlocks/1.12.2/src/main/resources/assets/westerosblocks/textures/blocks/${texture}.png`
+          }),
+          ctmTextures: ctm.find((item) => item.name === block.blockName).children && ctm.find((item) => item.name === block.blockName).children.map((texture) => {
+            return `https://raw.githubusercontent.com/WesterosCraft/WesterosCraftRP/v1.12.2/assets/minecraft/mcpatcher/ctm/${texture.path}`
           })
         });
       });
@@ -31,9 +37,9 @@ const reducer = (input) => {
   return result;
 };
 
+
 const result = reducer(data);
 
-console.log(reducer(data));
 
 const writeJson = () => {
   fs.writeFile("./result.json", JSON.stringify(result, null, 4), (err) => {
